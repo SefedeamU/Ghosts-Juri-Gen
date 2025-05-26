@@ -1,0 +1,99 @@
+<div class="container" style="max-width:1200px; display:flex; gap:2rem; align-items:flex-start;">
+  <!-- Formulario -->
+  <div style="flex:1;">
+    <h1>Generar Cotización Legal</h1>
+    <form (ngSubmit)="generarCotizacion()" #cotForm="ngForm">
+      <label>
+        Nombre del cliente:
+        <input type="text" name="nombre" [(ngModel)]="form.nombre" required />
+      </label>
+      <br />
+      <label>
+        Correo electrónico:
+        <input type="email" name="correo" [(ngModel)]="form.correo" required />
+      </label>
+      <br />
+      <label>
+        Tipo de servicio:
+        <select name="tipoServicio" [(ngModel)]="form.tipoServicio" required>
+          <option value="" disabled selected>Seleccione...</option>
+          <option value="Constitución de empresa">Constitución de empresa</option>
+          <option value="Defensa laboral">Defensa laboral</option>
+          <option value="Consultoría tributaria">Consultoría tributaria</option>
+        </select>
+      </label>
+      <br />
+      <label>
+        Descripción del caso:
+        <textarea name="descripcion" [(ngModel)]="form.descripcion" required></textarea>
+      </label>
+      <br />
+      <button type="submit" [disabled]="loading">Generar Cotización</button>
+    </form>
+
+    <div *ngIf="loading">Generando cotización...</div>
+    <div *ngIf="error" style="color:red">{{ error }}</div>
+
+    <div *ngIf="iaRespuesta">
+      <h3>Respuesta de IA:</h3>
+      <pre>{{ iaRespuesta | json }}</pre>
+    </div>
+
+    <div *ngIf="cotizacion">
+      <h3>Cotización generada:</h3>
+      <pre>{{ cotizacion | json }}</pre>
+    </div>
+  </div>
+
+  <!-- Tabla de cotizaciones y análisis IA -->
+  <div style="flex:2;">
+    <h2>Listado de Cotizaciones</h2>
+    <div *ngIf="loadingCotizaciones">Cargando cotizaciones...</div>
+    <table *ngIf="cotizaciones.length > 0" style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>N° Cotización</th>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Tipo Servicio</th>
+          <th>Precio</th>
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let c of cotizaciones">
+          <tr>
+            <td>{{ c.numero_cotizacion }}</td>
+            <td>{{ c.nombre_cliente }}</td>
+            <td>{{ c.email }}</td>
+            <td>{{ c.tipo_servicio }}</td>
+            <td>{{ c.precio | number:'1.2-2' }}</td>
+            <td>{{ c.fecha | date:'short' }}</td>
+            <td>{{ c.descripcion }}</td>
+            <td>
+              <button (click)="analizarCotizacion(c)">Analizar con IA</button>
+            </td>
+          </tr>
+          <tr *ngIf="analisisIAMap[c.numero_cotizacion]">
+            <td colspan="8" style="padding:0;">
+              <div class="container" style="margin:0.5rem 0; background:#f3f3ff;">
+                <h4>Análisis de IA para la cotización {{ c.numero_cotizacion }}</h4>
+                <ul>
+                  <li><strong>Complejidad:</strong> {{ analisisIAMap[c.numero_cotizacion].complejidad }}</li>
+                  <li><strong>Ajuste de precio:</strong> {{ analisisIAMap[c.numero_cotizacion].ajuste_precio }}</li>
+                  <li><strong>Servicios adicionales:</strong> {{ analisisIAMap[c.numero_cotizacion].servicios_adicionales?.join(', ') }}</li>
+                  <li><strong>Propuesta:</strong> <br> {{ analisisIAMap[c.numero_cotizacion].propuesta_texto }}</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div *ngIf="!loadingCotizaciones && cotizaciones.length === 0">
+      No hay cotizaciones registradas.
+    </div>
+  </div>
+</div>
