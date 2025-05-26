@@ -1,0 +1,78 @@
+{
+    "info": {
+        "name": "LegalAI Microservicios",
+        "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "description": "Colección para probar los microservicios de cotizaciones y análisis IA",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+        "name": "Crear Cotización",
+        "request": {
+            "method": "POST",
+            "header": [
+            { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombre_cliente\": \"Juan Pérez\",\n  \"email\": \"juan.perez@email.com\",\n  \"tipo_servicio\": \"Defensa laboral\",\n  \"descripcion\": \"Tengo un problema con mi empleador y necesito asesoría legal.\"\n}"
+            },
+            "url": {
+            "raw": "http://localhost:8000/cotizaciones",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["cotizaciones"]
+            }
+        }
+        },
+        {
+        "name": "Listar Cotizaciones",
+        "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+            "raw": "http://localhost:8000/cotizaciones",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["cotizaciones"]
+            }
+        }
+        },
+        {
+        "name": "Obtener Cotización por ID",
+        "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+            "raw": "http://localhost:8000/cotizaciones/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8000",
+            "path": ["cotizaciones", "1"]
+            }
+        }
+        },
+        {
+        "name": "Solicitar Análisis IA",
+        "request": {
+            "method": "POST",
+            "header": [
+            { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+            "mode": "raw",
+            "raw": "{\n  \"numero_cotizacion\": \"COT-2025-1234\",\n  \"precio\": 2000,\n  \"fecha\": \"2025-05-26T17:00:00\",\n  \"nombre_cliente\": \"Juan Pérez\",\n  \"email\": \"juan.perez@email.com\",\n  \"tipo_servicio\": \"Defensa laboral\",\n  \"descripcion\": \"Tengo un problema con mi empleador y necesito asesoría legal.\"\n}"
+            },
+            "url": {
+            "raw": "http://localhost:8001/analizar",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8001",
+            "path": ["analizar"]
+            }
+        }
+        }
+    ]
+}

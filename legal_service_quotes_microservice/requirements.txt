@@ -1,0 +1,10 @@
+FastAPI
+SQLAlchemy
+uvicorn
+pydantic
+httpx
+python-dotenv
+openai
+email-validator
+pymysql
+cryptography
