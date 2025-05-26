@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: "mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql_db:3306/${MYSQL_DATABASE}"
+      DATABASE_URL: "mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql_db:3307/${MYSQL_DATABASE}"
     depends_on:
       mysql_db:
         condition: service_healthy
