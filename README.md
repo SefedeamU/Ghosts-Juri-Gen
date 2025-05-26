@@ -82,3 +82,20 @@ El frontend está en la carpeta `frontend/legal_service/`.
 - El archivo `postman_collection.json` te permite probar la API fácilmente.
 
 ---
+
+**Respuestas:**
+
+1. **Arquitectura Modular:**  
+   Modularizaría el sistema usando microservicios, donde cada módulo (cotizaciones, tickets, expedientes, etc.) sería un servicio independiente, desplegado en su propio contenedor Docker. Cada microservicio tendría su propia base de datos o esquema, y se comunicarían entre sí mediante APIs REST o mensajería (por ejemplo, usando RabbitMQ). Así, cada módulo puede evolucionar, escalar y mantenerse de forma independiente, pero seguir conectado al ecosistema general.
+
+2. **Escalabilidad:**  
+   Si el sistema crece de 10 a 100 usuarios, ajustaría la base de datos optimizando índices, usando réplicas para balancear la carga de lectura, y separando la base de datos por módulos si es necesario (por ejemplo, una base para cotizaciones y otra para expedientes). También consideraría usar un servicio de base de datos gestionado en la nube para facilitar el escalado vertical y horizontal.
+
+3. **Integraciones:**  
+   Para automatizar el guardado de documentos legales en Google Drive o Dropbox, implementaría un microservicio dedicado a la gestión de documentos. Este servicio usaría las APIs oficiales de Google Drive o Dropbox, autenticando con OAuth2. Cuando se genere o suba un documento, el microservicio lo enviaría automáticamente a la nube, almacenando el enlace de acceso en la base de datos del sistema.
+
+4. **Deployment:**  
+   El frontend Angular se desplegaría en un bucket S3 de Amazon Web Services, configurado para servir contenido estático y con CloudFront para distribución global. La API y los microservicios se ejecutarían en una instancia EC2 de AWS, usando Docker Compose o Kubernetes para orquestar los contenedores. Así, la aplicación sería accesible desde computadoras y celulares, con bajo costo de mantenimiento y alta disponibilidad.
+
+5. **Seguridad:**  
+   Para la seguridad básica de los datos, implementaría autenticación y autorización usando OAuth2 y JWT (JSON Web Tokens) en todos los endpoints de la API. Además, usaría HTTPS para cifrar las comunicaciones, restringiría el acceso a la base de datos solo a los servicios necesarios y almacenaría las claves sensibles en variables de entorno seguras.
