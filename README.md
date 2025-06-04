@@ -1,6 +1,13 @@
 # API de Cotizaciones Legales + IA
 
-Este proyecto implementa una **API REST** para gestionar cotizaciones de servicios legales y un microservicio de IA que analiza cada cotización usando GPT (OpenAI). Incluye además un frontend Angular listo para usar.
+Este proyecto implementa una **API REST** para gestionar cotizaciones de servicios legales y un microservicio de IA que analiza cada cotización usando GPT (OpenAI). Incluye además un frontend Angular mis sencillo listo para usar.
+
+
+## Mejoras pendientes
+
+- Rediseñar y optimizar la interfaz visual, separando el frontend en un repositorio y proyecto independiente para mejorar la modularidad y facilitar el mantenimiento.
+- Integrar servicios de IA adicionales en contenedores dedicados, permitiendo especializar las respuestas según el tipo de consulta o área legal.
+- Evaluar la implementación de un contenedor remoto que ejecute modelos de IA open source como Ollama o Deepseek, eliminando la dependencia de servicios de pago y aumentando la autonomía del sistema.
 
 ## ¿Qué hace la API?
 
